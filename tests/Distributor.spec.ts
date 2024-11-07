@@ -1,9 +1,9 @@
-import {Blockchain} from '@ton-community/sandbox'
-import {beginCell, Cell, SendMode, toNano} from 'ton-core'
+import {Blockchain} from '@ton/sandbox'
+import {beginCell, Cell, SendMode, toNano} from '@ton/core'
 import {Distributor} from '../wrappers/Distributor'
-import '@ton-community/test-utils'
-import {compile} from '@ton-community/blueprint'
-import {randomAddress} from "@ton-community/test-utils";
+import '@ton/test-utils'
+import {compile} from '@ton/blueprint'
+import {randomAddress} from "@ton/test-utils";
 
 function commentBody(comment: string) {
     return beginCell()
@@ -74,21 +74,21 @@ describe('Distributor', () => {
         const result = await sender.send({
             to: distributor.address,
             value: toNano('1'),
-            sendMode: SendMode.PAY_GAS_SEPARATLY,
+            sendMode: SendMode.PAY_GAS_SEPARATELY,
         })
 
         expect(result.transactions).toHaveTransaction({
             from: distributor.address,
             to: firstShareAddress,
             value: (v) => v !== undefined && v > toNano('1') / 2n - toNano('0.01'),
-            body: (body) => body.equals(commentBody('first half'))
+            body: (body:any) => body.equals(commentBody('first half'))
         })
 
         expect(result.transactions).toHaveTransaction({
             from: distributor.address,
             to: secondShareAddress,
             value: (v) => v !== undefined && v > toNano('1') / 2n - toNano('0.01'),
-            body: (body) => body.equals(commentBody('second half'))
+            body: (body:any) => body.equals(commentBody('second half'))
         })
     })
 

@@ -8,7 +8,7 @@ import {
     DictionaryValue,
     Sender,
     SendMode, toNano
-} from "ton-core";
+} from "@ton/core";
 import {crc32, crc32str} from "../utils/crc32";
 
 export type DistributorShare = {
@@ -94,7 +94,7 @@ export class Distributor implements Contract {
     async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {
         await provider.internal(via, {
             value,
-            sendMode: SendMode.PAY_GAS_SEPARATLY,
+            sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell().endCell(),
         })
     }
@@ -102,7 +102,7 @@ export class Distributor implements Contract {
     async sendUpdateData(provider: ContractProvider, via: Sender, newData: Cell) {
         await provider.internal(via, {
             value: toNano('0.05'),
-            sendMode: SendMode.PAY_GAS_SEPARATLY,
+            sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell().storeUint(crc32str('op::update_data'), 32).storeRef(newData).endCell(),
         })
     }
@@ -110,7 +110,7 @@ export class Distributor implements Contract {
     async sendUpdateCode(provider: ContractProvider, via: Sender, newCode: Cell) {
         await provider.internal(via, {
             value: toNano('0.05'),
-            sendMode: SendMode.PAY_GAS_SEPARATLY,
+            sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell().storeUint(crc32str("op::update_code"), 32).storeRef(newCode).endCell(),
         })
     }
@@ -118,7 +118,7 @@ export class Distributor implements Contract {
     async sendTopup(provider: ContractProvider, via: Sender, value: bigint) {
         await provider.internal(via, {
             value,
-            sendMode: SendMode.PAY_GAS_SEPARATLY,
+            sendMode: SendMode.PAY_GAS_SEPARATELY,
             body: beginCell().storeUint(crc32str("op::topup"), 32).endCell(),
         })
     }

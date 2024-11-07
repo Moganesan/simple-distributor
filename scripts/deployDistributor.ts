@@ -1,6 +1,6 @@
-import {Address, toNano} from 'ton-core'
+import {Address, toNano} from '@ton/core'
 import {Distributor} from '../wrappers/Distributor'
-import {compile, NetworkProvider} from '@ton-community/blueprint'
+import {compile, NetworkProvider} from '@ton/blueprint'
 
 export async function run(provider: NetworkProvider) {
     let myAddress = Address.parse('EQBhoQiXKyy4iFcbVHZ1s2YcdiuSEfwNdemBtm7eBNet4-in')
